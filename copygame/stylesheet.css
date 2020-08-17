@@ -1,0 +1,30 @@
+#div1 {
+    float: top;
+    padding-left: 10px;
+    width:590px;
+    height: 40px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #aaa;
+    color: #0000ff;
+    box-shadow: 8px 8px 5px #888;
+  }
+#div2 {
+    float: top;
+    height: 10px;
+  }
+#canvas_tag_1 {
+    float: top;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 8px 8px 5px #888;
+  }
+#canvas_tag_2 {
+    float: top;
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 8px 8px 5px #888;
+  }
