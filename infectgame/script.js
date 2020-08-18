@@ -90,7 +90,7 @@ function tick1() {
   // 20個の円についてのループ
   var n;
   for (n = 0; n < 1600; n++){
-    gb[n].infect();
+    gb[n].day();
     gb[n].show();
   }
   plot_status();
@@ -113,17 +113,21 @@ function draw_canvas() {
   // initializatio of the board
   gb = new Array(1600);
   for (var x1=0; x1<20; x1++) { x_rr[x1]=0.4; }
-  for (var y1=0; y1<20; y1++) { y_rr[y1]=0.4; }
-  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.4; }
+  for (var y1=0; y1<4; y1++) { y_rr[y1]=0.4; }
+  for (var z1=0; z1<20; z1++) { z_rr[z1]=0.4; }
   // game bord のクリア
   var n1=0;
-  for (var y1=0; y1<20; y1++) {
+  for (var y1=0; y1<4; y1++) {
     for (var x1=0; x1<20; x1++) {
-       for (var z1=0; z1<4; z1++) {
-         gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr);
+       for (var z1=0; z1<20; z1++) {
+         gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr,0,gb);
          n1++;
        }
     }
+  }
+  for (n = 0; n < 32; n++){
+      var n1 = n * 29;
+      gb[n1].infect()
   }
   
   // tick1 を毎秒 30 回実行するための設定
