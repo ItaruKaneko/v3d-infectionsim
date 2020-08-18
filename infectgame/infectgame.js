@@ -62,14 +62,15 @@ game_cell.prototype.pick_xyz=function(x1,y1,z1) {
 game_cell.prototype.day=function(){
   if (this.st == 0) {  // not infected
     var x1 = this.x; // x community index
-    var y1 = this.x; // y family index
-    var z1 = this.x;
+    var y1 = this.y; // y family index
+    var z1 = this.z;
     // meet some one else in different x
     r1 = Math.random();                   // infection ratio
     r2 = Math.floor(Math.random() * 20);  // other person to meet
-    if (1<0) {
-      if (r1 < this.x_rr[this.x]) {
-        gb1 = this.pick_xyz(x1,r2,z1);
+    if (r1 < this.x_rr[this.x]) {
+      gb1 = this.pick_xyz(x1,r2,z1);
+      if (1>0) {
+        ci1 = gb1.ci;
         if (gb1.ci>0) {
           this.st = 1;
           this.ci = 1;
