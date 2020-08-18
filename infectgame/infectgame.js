@@ -22,6 +22,8 @@ function game_cell(n1,x1,y1,z1,x_rr1,y_rr1,z_rr1) {
   this.ucount = 0;  // use count
 }
 
+// git test change this line
+
 game_cell.prototype.show=function(){
    // rect を描画
     // y 座標を整数に変換してから描画する    
