@@ -22,6 +22,12 @@ function game_cell(n1,x1,y1,z1,x_rr1,y_rr1,z_rr1,st1,gb1) {
   this.gb = gb1;  // game board itself
 }
 
+game_cell.prototype.isinfected=function(){
+  if (this.st==0) {return(0);}
+  else if (this.st < 12) {return(1); }
+  return(0);
+
+}
 game_cell.prototype.show=function(){
    // rect を描画
     // y 座標を整数に変換してから描画する    
@@ -36,11 +42,15 @@ game_cell.prototype.show=function(){
     c1.shadowBlur = 0;
 
     if(this.st==0){
-      c1.fillStyle = 'rgb(255,255,0)'; // 黄色
-    } else if (this.st==1) {
-      c1.fillStyle = 'rgb(255,0,128)'; // 赤
-    } else{
-      c1.fillStyle = 'rgb(0,0,255)'; // 青
+      c1.fillStyle = 'rgb(0,255,255)'; // 水色 = 健康
+    } else if (this.st < 5) {
+      c1.fillStyle = 'rgb(128,128,128)'; // 灰 = 潜伏
+    } else if (this.st < 9) {
+      c1.fillStyle = 'rgb(255,128,128)'; // ピンク = 感染可能
+    } else if (this.st < 12) {
+      c1.fillStyle = 'rgb(255,0,0)'; // 赤 = 発症
+    } else {
+      c1.fillStyle = 'rgb(128,255,128)'; // 緑 = 回復
     }
     x2 = x1 * 20 + z1 * 2;
     y2 = y1 * 16;
@@ -69,25 +79,33 @@ game_cell.prototype.day=function(){
     r2 = Math.floor(Math.random() * 20);  // other person to meet
     if (r1 < this.x_rr[this.x]) {
       gb1 = this.pick_xyz(x1,r2,z1);
-      if (1>0) {
-        ci1 = gb1.ci;
-        if (gb1.ci>0) {
-          this.st = 1;
-          this.ci = 1;
-        }
+      ci1 = gb1.ci;
+      if (gb1.ci>0) {
+        this.st = 1;
+        this.ci = 1;
       }
     }
-    if (1<0){
-    r1 = Math.random();
+    // meet some one else in different y
+    r1 = Math.random();                   // infection ratio
+    r2 = Math.floor(Math.random() * 20);  // other person to meet
     if (r1 < this.y_rr[this.y]) {
-      this.st = 1;
+      gb1 = this.pick_xyz(r2,y1,z1);
+      ci1 = gb1.ci;
+      if (gb1.ci>0) {
+        this.st = 1;
         this.ci = 1;
+      }
     }
-    r1 = Math.random();
+    // meet some one else in different z
+    r1 = Math.random();                   // infection ratio
+    r2 = Math.floor(Math.random() * 4);  // other person to meet
     if (r1 < this.z_rr[this.z]) {
-      this.st = 1;
+      gb1 = this.pick_xyz(x1,y1,r2);
+      ci1 = gb1.ci;
+      if (gb1.ci>0) {
+        this.st = 1;
         this.ci = 1;
-    }
+      }
     }
   }
   else {
@@ -98,6 +116,10 @@ game_cell.prototype.day=function(){
     if (this.st <5 ) { // Hiding
     }
     else if (this.st <9 ) { // infectable
+      this.ci = 1;
+    }
+    else if (this.st == 9) { // end of infetable
+      this.ci = 0;
     }
     if (this.st < 12) {
       this.st = this.st + 1

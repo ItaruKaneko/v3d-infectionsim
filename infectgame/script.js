@@ -2,7 +2,7 @@
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
 var copygame_agents;     // 全 copygame_agent を格納する配列
-var number_of_copygame_agents; // copygame_agent の数
+var number_iga = 1600;    // number of infection game agents
 var number_of_creators; // copygame_agent の数
 var number_of_pirates; // pirates の数
 var gb;        // game bord, sixze 600
@@ -22,60 +22,41 @@ function plot_status(){
   ncnt=0; // 全体の生きているエージェントの数
   aena=0; // 著作者のエネルギー
   var n;
-  for (n = 0; n < number_of_copygame_agents; n++) {
-    esum=esum + copygame_agents[n].ep;
-    if (copygame_agents[n].ep > 0 && copygame_agents[n].type==1) {
-      ncnt=ncnt + 1;
-      aena=aena + copygame_agents[n].ep;
+  for (n = 0; n < number_iga; n++) {
+    if (gb[n].isinfected()) {
+      esum=esum + 1;
     }
   }
   c2.beginPath();
-  c2.rect(x1 + 40,390-esum, 1,1);
+  c2.rect(x1*2 + 40,390-esum*2 - 1, 2,2);
   c2.fillStyle = 'rgb(0,64,64)'; // 紺色
-  c2.fill();
-  c2.beginPath();
-  c2.rect(x1 + 40,390-ncnt*4, 1,1);
-  c2.fillStyle = 'rgb(128,0,64)'; // 紺色
-  c2.fill();
-  c2.beginPath();
-  c2.rect(x1 + 40,390-aena, 1,1);
-  c2.fillStyle = 'rgb(0,128,64)'; // 紺色
   c2.fill();
 }
 
 function plot_axis(){
   c2.beginPath();
   c2.fillStyle = 'rgb(0,0,0)'; // 紺色
-  c2.rect(40,10,540,380);
+  c2.rect(40,10,360,380);
   c2.stroke();
   var n;
-  for (n=0; n<540; n+=50) {
+  for (n=0; n<190; n+=20) {
     c2.beginPath();
     c2.fillStyle = 'rgb(0,0,0)'; // 紺色
-    c2.rect(n+40,386,1,4);
+    c2.rect(n*2+40,386,1,4);
     c2.fill();
     c2.font = "10px 'ＭＳ Ｐゴシック'";
     c2.strokeStyle = "blue";
-    c2.fillText(n.toString(10),n+35,402);
+    c2.fillText(n.toString(10),n*2+35,402);
   }
-  for (n=0; n<380; n+=20) {
+  for (n=0; n<190; n+=20) {
     // 左側の目盛
     c2.beginPath();
     c2.fillStyle = 'rgb(0,0,0)'; // 黒
-    c2.rect(40,390-n,4,1);
+    c2.rect(40,390-n*2,4,1);
     c2.fill();
     c2.font = "10px 'ＭＳ Ｐゴシック'";
     c2.strokeStyle = "blue";
-    c2.fillText(n.toString(10),20,390 - n);
-    // 右側の目盛
-    c2.beginPath();
-    c2.fillStyle = 'rgb(0,0,0)'; // 黒
-    c2.rect(576,390-n,4,1);
-    c2.fill();
-    c2.font = "10px 'ＭＳ Ｐゴシック'";
-    c2.strokeStyle = "blue";
-    var n1 = n / 4;
-    c2.fillText(n1.toString(10),585,390 - n);
+    c2.fillText(n.toString(10),20,390 - n*2);
   }
   //c2.filltext("tick",210,220)
 }
@@ -83,6 +64,7 @@ function plot_axis(){
 // copygame_agent クラスを使ったアニメーションの本体
 // 毎秒 30 回実行する関数
 function tick1() {
+  if (tick_count1 > 180) {return; }
   tick_count1=tick_count1+1;
   // 描画領域をいったんクリアする
   c1.clearRect(0, 0, 600, 600);
@@ -112,9 +94,9 @@ function draw_canvas() {
   tick_count1=0; // tick count をゼロリセット
   // initializatio of the board
   gb = new Array(1600);
-  for (var x1=0; x1<20; x1++) { x_rr[x1]=0.4; }
-  for (var y1=0; y1<4; y1++) { y_rr[y1]=0.4; }
-  for (var z1=0; z1<20; z1++) { z_rr[z1]=0.4; }
+  for (var x1=0; x1<20; x1++) { x_rr[x1]=1.0/35.0; }
+  for (var y1=0; y1<20; y1++) { y_rr[y1]=1.0/35.0; }
+  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.2; }
   // game bord のクリア
   var n1=0;
   for (var z1=0; z1<4; z1++) {
@@ -125,8 +107,8 @@ function draw_canvas() {
        }
     }
   }
-  for (n = 0; n < 32; n++){
-      var n1 = n * 29;
+  for (n = 0; n < 20; n++){
+      var n1 = n * 21 + 400 * (n % 4);
       gb[n1].infect()
   }
   
