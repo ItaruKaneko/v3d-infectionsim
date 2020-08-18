@@ -17,7 +17,8 @@ function game_cell(n1,x1,y1,z1,x_rr1,y_rr1,z_rr1,st1,gb1) {
   this.x_rr=x_rr1; // reproduction rate for x coordinate 
   this.y_rr=y_rr1; // reproduction rate for y coordinate 
   this.z_rr=z_rr1; // reproduction rate for x coordinate 
-  this.st = 0; // status = 0
+  this.st = st1; // status = 0
+  this.ci = 0+0 // capable to infect
   this.gb = gb1;  // game board itself
 }
 
@@ -54,8 +55,8 @@ game_cell.prototype.show=function(){
 }
 
 game_cell.prototype.pick_xyz=function(x1,y1,z1) {
-  var gd1=this.gb[z1 * 400 + y1 * 20 + x1];
-  return(gd1);
+  var gb1=this.gb[z1 * 400 + y1 * 20 + x1];
+  return(gb1);
 }
 
 game_cell.prototype.day=function(){
@@ -63,21 +64,28 @@ game_cell.prototype.day=function(){
     var x1 = this.x; // x community index
     var y1 = this.x; // y family index
     var z1 = this.x;
-    if (1<0) {
     // meet some one else in different x
     r1 = Math.random();                   // infection ratio
     r2 = Math.floor(Math.random() * 20);  // other person to meet
-    if (r1 < this.x_rr[this.x]) {
-      gd1 = this.gd.pick_xyz(x1,r2,z1);
-      this.st = 1;
+    if (1<0) {
+      if (r1 < this.x_rr[this.x]) {
+        gb1 = this.pick_xyz(x1,r2,z1);
+        if (gb1.ci>0) {
+          this.st = 1;
+          this.ci = 1;
+        }
+      }
     }
+    if (1<0){
     r1 = Math.random();
     if (r1 < this.y_rr[this.y]) {
       this.st = 1;
+        this.ci = 1;
     }
     r1 = Math.random();
     if (r1 < this.z_rr[this.z]) {
       this.st = 1;
+        this.ci = 1;
     }
     }
   }

@@ -90,7 +90,7 @@ function tick1() {
   // 20個の円についてのループ
   var n;
   for (n = 0; n < 1600; n++){
-    //gb[n].day();
+    gb[n].day();
     gb[n].show();
   }
   plot_status();
