@@ -1,0 +1,22 @@
+{
+    // IntelliSense を使用して利用可能な属性を学べます。
+    // 既存の属性の説明をホバーして表示します。
+    // 詳細情報は次を確認してください: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-msedge",
+            "request": "launch",
+            "name": "infectgame",
+            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\infectgame\\index.html"
+ 
+        },
+
+        {
+            "type": "pwa-msedge",
+            "request": "launch",
+            "name": "copygame",
+            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\copygame\\index.html"
+        }
+    ]
+}
