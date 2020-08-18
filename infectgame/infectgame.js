@@ -27,6 +27,7 @@ game_cell.prototype.show=function(){
     var x1,y1;
     x1 = Math.floor(this.x);
     y1 = Math.floor(this.y);
+    z1 = Math.floor(this.z);
     c1.beginPath();
     c1.shadowColor = 'rgb(0,0,0)';   // 影
     c1.shadowOffsetX = 0;
@@ -40,29 +41,34 @@ game_cell.prototype.show=function(){
     } else{
       c1.fillStyle = 'rgb(0,0,255)'; // 青
     }
-    x2 = x1 * 20 + y1 * 2;
-    y2 = y1 * 3;
-    z2 = Math.floor(this.z) * 16;
-    c1.moveTo(x2,350-y2 - z2);
-    c1.lineTo(x2+12,350-y2 - z2);
-    c1.lineTo(x2+16,350-y2-2 - z2);
-    c1.lineTo(x2+4,350-y2-2 - z2);
-    c1.lineTo(x2,350-y2 - z2);
+    x2 = x1 * 20 + z1 * 2;
+    y2 = y1 * 16;
+    z2 = z1 * 3;
+    c1.moveTo(x2,350-z2 - y2);
+    c1.lineTo(x2+12,350-z2 - y2);
+    c1.lineTo(x2+16,350-z2-2 - y2);
+    c1.lineTo(x2+4,350-z2-2 - y2);
+    c1.lineTo(x2,350-z2 - y2);
     c1.closePath();
     c1.fill();
 }
 
 game_cell.prototype.pick_xyz=function(x1,y1,z1) {
-  var gd1=this.gb[y1 * 400 + z1 * 20 + x1];
+  var gd1=this.gb[z1 * 400 + y1 * 20 + x1];
   return(gd1);
 }
 
 game_cell.prototype.day=function(){
   if (this.st == 0) {  // not infected
+    var x1 = this.x; // x community index
+    var y1 = this.x; // y family index
+    var z1 = this.x;
+    if (1<0) {
     // meet some one else in different x
     r1 = Math.random();                   // infection ratio
-    r2 = Math.floor(Math.randon() * 20);  // other person to meet
+    r2 = Math.floor(Math.random() * 20);  // other person to meet
     if (r1 < this.x_rr[this.x]) {
+      gd1 = this.gd.pick_xyz(x1,r2,z1);
       this.st = 1;
     }
     r1 = Math.random();
@@ -72,6 +78,7 @@ game_cell.prototype.day=function(){
     r1 = Math.random();
     if (r1 < this.z_rr[this.z]) {
       this.st = 1;
+    }
     }
   }
   else {
