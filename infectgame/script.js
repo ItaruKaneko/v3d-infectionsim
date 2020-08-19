@@ -94,9 +94,9 @@ function draw_canvas() {
   tick_count1=0; // tick count をゼロリセット
   // initializatio of the board
   gb = new Array(1600);
-  for (var x1=0; x1<20; x1++) { x_rr[x1]=1.0/35.0; }
-  for (var y1=0; y1<20; y1++) { y_rr[y1]=1.0/35.0; }
-  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.2; }
+  for (var x1=0; x1<20; x1++) { x_rr[x1]=0.004; }
+  for (var y1=0; y1<20; y1++) { y_rr[y1]=0.004; }
+  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.004; }
   // game bord のクリア
   var n1=0;
   for (var z1=0; z1<4; z1++) {

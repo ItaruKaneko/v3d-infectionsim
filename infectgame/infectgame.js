@@ -52,14 +52,14 @@ game_cell.prototype.show=function(){
     } else {
       c1.fillStyle = 'rgb(128,255,128)'; // 緑 = 回復
     }
-    x2 = x1 * 20 + z1 * 2;
+    x2 = x1 * 20 + 6 - z1 * 2 + 10;
     y2 = y1 * 16;
-    z2 = z1 * 3;
-    c1.moveTo(x2,350-z2 - y2);
-    c1.lineTo(x2+12,350-z2 - y2);
-    c1.lineTo(x2+16,350-z2-2 - y2);
-    c1.lineTo(x2+4,350-z2-2 - y2);
-    c1.lineTo(x2,350-z2 - y2);
+    z2 = 9-z1 * 3;
+    c1.moveTo(x2,330-z2 - y2);
+    c1.lineTo(x2+12,330-z2 - y2);
+    c1.lineTo(x2+12,330-z2-4 - y2);
+    c1.lineTo(x2,330-z2-4 - y2);
+    c1.lineTo(x2,330-z2 - y2);
     c1.closePath();
     c1.fill();
 }
@@ -76,35 +76,41 @@ game_cell.prototype.day=function(){
     var z1 = this.z;
     // meet some one else in different x
     r1 = Math.random();                   // infection ratio
-    r2 = Math.floor(Math.random() * 20);  // other person to meet
-    if (r1 < this.x_rr[this.x]) {
-      gb1 = this.pick_xyz(x1,r2,z1);
-      ci1 = gb1.ci;
-      if (gb1.ci>0) {
-        this.st = 1;
-        this.ci = 1;
+    for(var r2=0; r2<20; r2++) {
+    //r2 = Math.floor(Math.random() * 20);  // other person to meet
+      if (r1 < this.x_rr[this.x]) {
+        gb1 = this.pick_xyz(x1,r2,z1);
+        ci1 = gb1.ci;
+        if (gb1.ci>0) {
+          this.st = 1;
+          this.ci = 1;
+        }
       }
     }
     // meet some one else in different y
     r1 = Math.random();                   // infection ratio
-    r2 = Math.floor(Math.random() * 20);  // other person to meet
-    if (r1 < this.y_rr[this.y]) {
-      gb1 = this.pick_xyz(r2,y1,z1);
-      ci1 = gb1.ci;
-      if (gb1.ci>0) {
-        this.st = 1;
-        this.ci = 1;
+    for(var r2=0; r2<20; r2++) {
+    //r2 = Math.floor(Math.random() * 20);  // other person to meet
+      if (r1 < this.y_rr[this.y]) {
+        gb1 = this.pick_xyz(r2,y1,z1);
+        ci1 = gb1.ci;
+        if (gb1.ci>0) {
+          this.st = 1;
+          this.ci = 1;
+        }
       }
     }
     // meet some one else in different z
     r1 = Math.random();                   // infection ratio
-    r2 = Math.floor(Math.random() * 4);  // other person to meet
-    if (r1 < this.z_rr[this.z]) {
-      gb1 = this.pick_xyz(x1,y1,r2);
-      ci1 = gb1.ci;
-      if (gb1.ci>0) {
-        this.st = 1;
-        this.ci = 1;
+    for(var r2=0; r2<4; r2++) {
+    // r2 = Math.floor(Math.random() * 4);  // other person to meet
+      if (r1 < this.z_rr[this.z]) {
+        gb1 = this.pick_xyz(x1,y1,r2);
+        ci1 = gb1.ci;
+        if (gb1.ci>0) {
+          this.st = 1;
+          this.ci = 1;
+        }
       }
     }
   }
@@ -118,7 +124,7 @@ game_cell.prototype.day=function(){
     else if (this.st <9 ) { // infectable
       this.ci = 1;
     }
-    else if (this.st == 9) { // end of infetable
+    else if (this.st == 12) { // end of infetable
       this.ci = 0;
     }
     if (this.st < 12) {
