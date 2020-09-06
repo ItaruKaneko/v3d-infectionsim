@@ -2,12 +2,16 @@
 var c1;        // ゲームボード描画コンテキスト
 var c2;        // グラフ描画コンテキスト
 var copygame_agents;     // 全 copygame_agent を格納する配列
-var number_iga = 1600;    // number of infection game agents
 var number_of_creators; // copygame_agent の数
 var number_of_pirates; // pirates の数
 var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
-var x_rr = new Array(20);
+
+var x_num = 50;
+var y_num = 20;
+var all_num = x_num * y_num * 4;
+var number_iga = all_num;    // number of infection game agents
+var x_rr = new Array(x_num);
 var y_rr = new Array(20);
 var z_rr = new Array(4);
 
@@ -78,7 +82,7 @@ game_cell.prototype.show=function(){
 }
 
 game_cell.prototype.pick_xyz=function(x1,y1,z1) {
-  var gb1=this.gb[z1 * 400 + y1 * 20 + x1];
+  var gb1=this.gb[z1 * 400 + y1 * x_num + x1];
   return(gb1);
 }
 
@@ -102,7 +106,7 @@ game_cell.prototype.day=function(){
     }
     // meet some one else in different y
     r1 = Math.random();                   // infection ratio
-    for(var r2=0; r2<20; r2++) {
+    for(var r2=0; r2<x_num; r2++) {
     //r2 = Math.floor(Math.random() * 20);  // other person to meet
       if (r1 < this.y_rr[this.y]) {
         gb1 = this.pick_xyz(r2,y1,z1);
@@ -215,7 +219,7 @@ function tick1() {
 
   // 20個の円についてのループ
   var n;
-  for (n = 0; n < 1600; n++){
+  for (n = 0; n < all_num; n++){
     gb[n].day();
     gb[n].show();
   }
@@ -237,15 +241,15 @@ function draw_canvas() {
   }
   tick_count1=0; // tick count をゼロリセット
   // initializatio of the board
-  gb = new Array(1600);
-  for (var x1=0; x1<20; x1++) { x_rr[x1]=0.0050; }
+  gb = new Array(all_num);
+  for (var x1=0; x1<x_num; x1++) { x_rr[x1]=0.0050; }
   for (var y1=0; y1<20; y1++) { y_rr[y1]=0.0044; }
   for (var z1=0; z1<4; z1++) { z_rr[z1]=0.0006; }
   // game bord のクリア
   var n1=0;
   for (var z1=0; z1<4; z1++) {
     for (var y1=0; y1<20; y1++) {
-      for (var x1=0; x1<20; x1++) {
+      for (var x1=0; x1<x_num; x1++) {
          gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr,0,gb);
          n1++;
        }
