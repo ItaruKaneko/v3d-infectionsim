@@ -8,18 +8,18 @@ var gb;        // game bord, sixze 600
 var tick_count1;      // tick count 1
 
 var x_num = 50;
-var y_num = 20;
+var y_num = 40;
 var all_num = x_num * y_num * 4;
 var number_iga = all_num;    // number of infection game agents
 var x_rr = new Array(x_num);
-var y_rr = new Array(20);
+var y_rr = new Array(y_num);
 var z_rr = new Array(4);
 
 // infectgame agents 0.0
 // Previous version
 //    copygame04_04
 //     2019/11/21
-// x=20 x y=20 x z=4 の3次元格子
+// x=20 x y=y_num x z=4 の3次元格子
 // x は職場、yはグループ, z は家庭を表す
 // 再生産率は x, y, z 配列に
 // 
@@ -69,20 +69,22 @@ game_cell.prototype.show=function(){
     } else {
       c1.fillStyle = 'rgb(128,255,128)'; // 緑 = 回復
     }
+    voff=y_num * 12 + 10;
     x2 = x1 * 8 + 6 - z1 * 2 + 10;
     y2 = y1 * 12;
     z2 = 9-z1 * 2;
-    c1.moveTo(x2,330-z2 - y2);
-    c1.lineTo(x2+4,330-z2 - y2);
-    c1.lineTo(x2+4,330-z2-4 - y2);
-    c1.lineTo(x2,330-z2-4 - y2);
-    c1.lineTo(x2,330-z2 - y2);
+
+    c1.moveTo(x2,voff-z2 - y2);
+    c1.lineTo(x2+4,voff-z2 - y2);
+    c1.lineTo(x2+4,voff-z2-4 - y2);
+    c1.lineTo(x2,voff-z2-4 - y2);
+    c1.lineTo(x2,voff-z2 - y2);
     c1.closePath();
     c1.fill();
 }
 
 game_cell.prototype.pick_xyz=function(x1,y1,z1) {
-  var gb1=this.gb[z1 * 400 + y1 * x_num + x1];
+  var gb1=this.gb[(z1 * y_num + y1) * x_num + x1];
   return(gb1);
 }
 
@@ -93,7 +95,7 @@ game_cell.prototype.day=function(){
     var z1 = this.z;
     // meet some one else in different x
     r1 = Math.random();                   // infection ratio
-    for(var r2=0; r2<20; r2++) {
+    for(var r2=0; r2<y_num; r2++) {
     //r2 = Math.floor(Math.random() * 20);  // other person to meet
       if (r1 < this.x_rr[this.x]) {
         gb1 = this.pick_xyz(x1,r2,z1);
@@ -176,7 +178,7 @@ function plot_status(){
     }
   }
   c2.beginPath();
-  c2.rect(x1*2 + 40,390-esum*2 - 1, 2,2);
+  c2.rect(x1 + 40,390-esum - 1, 2,2);
   c2.fillStyle = 'rgb(0,64,64)'; // 紺色
   c2.fill();
 }
@@ -187,16 +189,16 @@ function plot_axis(){
   c2.rect(40,10,360,380);
   c2.stroke();
   var n;
-  for (n=0; n<190; n+=20) {
+  for (n=0; n<361; n+=20) {
     c2.beginPath();
     c2.fillStyle = 'rgb(0,0,0)'; // 紺色
     c2.rect(n*2+40,386,1,4);
     c2.fill();
     c2.font = "10px 'ＭＳ Ｐゴシック'";
     c2.strokeStyle = "blue";
-    c2.fillText(n.toString(10),n*2+35,402);
+    c2.fillText(n.toString(10),n+35,402);
   }
-  for (n=0; n<190; n+=20) {
+  for (n=0; n<360; n+=20) {
     // 左側の目盛
     c2.beginPath();
     c2.fillStyle = 'rgb(0,0,0)'; // 黒
@@ -204,7 +206,7 @@ function plot_axis(){
     c2.fill();
     c2.font = "10px 'ＭＳ Ｐゴシック'";
     c2.strokeStyle = "blue";
-    c2.fillText(n.toString(10),20,390 - n*2);
+    c2.fillText(n.toString(10),20,390 - n);
   }
   //c2.filltext("tick",210,220)
 }
@@ -212,7 +214,7 @@ function plot_axis(){
 // copygame_agent クラスを使ったアニメーションの本体
 // 毎秒 30 回実行する関数
 function tick1() {
-  if (tick_count1 > 180) {return; }
+  if (tick_count1 > 359) {return; }
   tick_count1=tick_count1+1;
   // 描画領域をいったんクリアする
   c1.clearRect(0, 0, 600, 600);
@@ -242,13 +244,15 @@ function draw_canvas() {
   tick_count1=0; // tick count をゼロリセット
   // initializatio of the board
   gb = new Array(all_num);
-  for (var x1=0; x1<x_num; x1++) { x_rr[x1]=0.0050; }
-  for (var y1=0; y1<20; y1++) { y_rr[y1]=0.0044; }
-  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.0006; }
+  for (var x1=5; x1<x_num; x1++) { x_rr[x1]=0.045/x_num; }
+  for (var y1=5; y1<y_num; y1++) { y_rr[y1]=0.045/y_num; }
+  for (var x1=0; x1<5; x1++) { x_rr[x1]=0.25/x_num; }
+  for (var y1=0; y1<5; y1++) { y_rr[y1]=0.20/y_num; }
+  for (var z1=0; z1<4; z1++) { z_rr[z1]=0.03/4; }
   // game bord のクリア
   var n1=0;
   for (var z1=0; z1<4; z1++) {
-    for (var y1=0; y1<20; y1++) {
+    for (var y1=0; y1<y_num; y1++) {
       for (var x1=0; x1<x_num; x1++) {
          gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr,0,gb);
          n1++;
