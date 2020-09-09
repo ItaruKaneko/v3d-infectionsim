@@ -89,6 +89,14 @@ game_cell.prototype.pick_xyz=function(x1,y1,z1) {
   return(gb1);
 }
 
+game_cell.prototype.meet=function(gb1) {
+  ci1 = gb1.ci;
+  if (gb1.ci>0) {
+    this.st = 1;
+    this.ci = 1;
+  }
+}
+
 game_cell.prototype.day=function(){
   if (this.st == 0) {  // not infected
     // 感染していないエージェント
@@ -100,12 +108,7 @@ game_cell.prototype.day=function(){
     for(var r2=0; r2<y_num; r2++) {
     //r2 = Math.floor(Math.random() * 20);  // other person to meet
       if (r1 < this.x_rr[this.x]) {
-        gb1 = this.pick_xyz(x1,r2,z1);
-        ci1 = gb1.ci;
-        if (gb1.ci>0) {
-          this.st = 1;
-          this.ci = 1;
-        }
+        this.meet(this.pick_xyz(x1,r2,z1));
       }
     }
     // meet some one else in different y
@@ -113,12 +116,7 @@ game_cell.prototype.day=function(){
     for(var r2=0; r2<x_num; r2++) {
     //r2 = Math.floor(Math.random() * 20);  // other person to meet
       if (r1 < this.y_rr[this.y]) {
-        gb1 = this.pick_xyz(r2,y1,z1);
-        ci1 = gb1.ci;
-        if (gb1.ci>0) {
-          this.st = 1;
-          this.ci = 1;
-        }
+        this.meet(this.pick_xyz(r2,y1,z1));
       }
     }
     // meet some one else in different z
@@ -126,12 +124,7 @@ game_cell.prototype.day=function(){
     for(var r2=0; r2<4; r2++) {
     // r2 = Math.floor(Math.random() * 4);  // other person to meet
       if (r1 < this.z_rr[this.z]) {
-        gb1 = this.pick_xyz(x1,y1,r2);
-        ci1 = gb1.ci;
-        if (gb1.ci>0) {
-          this.st = 1;
-          this.ci = 1;
-        }
+        this.meet(this.pick_xyz(x1,y1,r2));
       }
     }
   }
