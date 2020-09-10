@@ -254,10 +254,10 @@ function draw_canvas() {
   tick_count1=0; // tick count をゼロリセット
   // initializatio of the board
   gb = new Array(all_num);
-  for (var x1=5; x1<x_num; x1++) { x_rr[x1]=0.4/x_num/8; }
-  for (var y1=4; y1<y_num; y1++) { y_rr[y1]=0.4/y_num/8; }
-  for (var x1=0; x1<5; x1++) { x_rr[x1]=1.4/x_num/8; }
-  for (var y1=0; y1<4; y1++) { y_rr[y1]=1.4/y_num/8; }
+  for (var x1=5; x1<x_num; x1++) { x_rr[x1]=0.4/x_num/8; } // 90 % of group
+  for (var y1=4; y1<y_num; y1++) { y_rr[y1]=0.4/y_num/8; } // 90 % of group
+  for (var x1=0; x1<5; x1++) { x_rr[x1]=1.4/x_num/8; } // 10 % of group
+  for (var y1=0; y1<4; y1++) { y_rr[y1]=1.4/y_num/8; } // 10 % of group
   for (var z1=0; z1<4; z1++) { z_rr[z1]=0.6/4/8; }
   // game bord のクリア
   var n1=0;
