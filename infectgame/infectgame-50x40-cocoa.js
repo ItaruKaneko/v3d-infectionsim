@@ -35,7 +35,7 @@ function game_cell(n1,x1,y1,z1,x_rr1,y_rr1,z_rr1,st1,cd1,gb1) {
   this.y_rr=y_rr1; // reproduction rate for y coordinate 
   this.z_rr=z_rr1; // reproduction rate for x coordinate 
   this.st = st1; // status = 0
-  this.cs = cd1; // contact detecter installed
+  this.cd = cd1; // contact detecter installed
   this.gb = gb1;  // game board itself
   this.ci = 0+0 // capable to infect
 }
@@ -92,8 +92,19 @@ game_cell.prototype.pick_xyz=function(x1,y1,z1) {
 game_cell.prototype.meet=function(gb1) {
   ci1 = gb1.ci;
   if (gb1.ci>0) {
-    this.st = 1;
-    this.ci = 1;
+    if (this.cd>0 && gb1.cd>0) {
+      // both has contact detector
+      this.cd = 2; // contact detected so far the person will be isolated
+        // and does not infect to others
+      this.ci = 0;
+      // so far the person is infected but will not infect others
+      this.st = 1;
+    }
+    else {
+      // contact is not detected and person may infect others
+      this.st = 1;
+      this.ci = 1;
+    }
   }
 }
 
@@ -244,7 +255,7 @@ function draw_canvas() {
   // initializatio of the board
   gb = new Array(all_num);
   for (var x1=5; x1<x_num; x1++) { x_rr[x1]=0.4/x_num/8; }
-  for (var y1=5; y1<y_num; y1++) { y_rr[y1]=0.4/y_num/8; }
+  for (var y1=4; y1<y_num; y1++) { y_rr[y1]=0.4/y_num/8; }
   for (var x1=0; x1<5; x1++) { x_rr[x1]=1.4/x_num/8; }
   for (var y1=0; y1<4; y1++) { y_rr[y1]=1.4/y_num/8; }
   for (var z1=0; z1<4; z1++) { z_rr[z1]=0.6/4/8; }
@@ -253,8 +264,11 @@ function draw_canvas() {
   for (var z1=0; z1<4; z1++) {
     for (var y1=0; y1<y_num; y1++) {
       for (var x1=0; x1<x_num; x1++) {
-         gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr,0,0,gb);
-         n1++;
+        var cd1 = Math.floor(1 + Math.random() - 0.3); // contact detector 70%
+        if (x1<5) { cd1 = 0;}
+        if (y1<4) { cd1 = 0;}
+        gb[n1]=new game_cell(n1,x1,y1,z1,x_rr,y_rr,z_rr,0,cd1,gb);
+        n1++;
        }
     }
   }
