@@ -8,35 +8,27 @@
             "type": "pwa-msedge",
             "request": "launch",
             "name": "infectgame-20x20",
-            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\infectgame\\index.html"
+            "file": "infectgame/index.html"
  
         },
         {
             "type": "pwa-msedge",
             "request": "launch",
             "name": "infectgame-50x40",
-            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\infectgame\\index-50x40.html"
+            "file": "infectgame\\index-50x40.html"
  
         },
         {
             "type": "pwa-msedge",
             "request": "launch",
             "name": "infectgame-50x40-nocd",
-            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\infectgame\\index-50x40-nocd.html"
- 
+            "file": "infectgame\\index-50x40-nocd.html"
         },
         {
             "type": "pwa-msedge",
             "request": "launch",
             "name": "infectgame-50x40-cocoa",
-            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\infectgame\\index-50x40-cocoa.html"
- 
-        },
-        {
-            "type": "pwa-msedge",
-            "request": "launch",
-            "name": "copygame",
-            "file": "c:\\Users\\itaru\\OneDrive\\prj-06\\expr2019\\copygame2019\\git\\copygame\\index.html"
+            "file": "infectgame\\index-50x40-cocoa.html"
         }
     ]
 }
